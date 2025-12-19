@@ -364,7 +364,57 @@ rca = generate_rca(sanitized_context, bug_detail)
 └─────────────────────────────────────────────────────┘
 ```
 
-#### Core Function: `generate_rca(context: str, bug_detail: str) -> str`
+#### Core Function: `generate_rca(context: str) -> str`
+
+**Purpose**: Generate comprehensive Root Cause Analysis using LLM
+
+**Implementation**:
+
+```python
+def generate_rca(context: str) -> str:
+    """
+    Generates Root Cause Analysis using LLM.
+    
+    Args:
+        context: Sanitized context from get_context() and security checks
+                 (includes bug details, logs, and relevant code)
+        
+    Returns:
+        Structured RCA markdown document
+        
+    Raises:
+        LLMAPIError: If API call fails
+        ValidationError: If response format is invalid
+    """
+    # Construct prompt with structured template
+    prompt = f"""
+    You are a senior software engineer conducting a root cause analysis.
+    
+    Context Information (includes bug description, logs, and relevant code):
+    {context}
+    
+    Provide a detailed RCA including:
+    1. Root Cause Identification
+    2. Affected Components
+    3. Impact Analysis
+    4. Recommended Fix
+    5. Prevention Strategies
+    """
+    
+    # Call LLM API
+    response = llm_client.generate(
+        prompt=prompt,
+        model="gpt-4",
+        temperature=0.3,  # Lower for more deterministic output
+        max_tokens=2000
+    )
+    
+    # Parse and validate response
+    rca = parse_rca_response(response)
+    validate_rca_structure(rca)
+    
+    return rca
+```
 
 **Purpose**: Generate comprehensive Root Cause Analysis using LLM
 
