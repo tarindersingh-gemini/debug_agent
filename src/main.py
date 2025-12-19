@@ -1,5 +1,5 @@
 from embeddings import get_context
-from utils import sanitize_secrets, detect_prompt_injection
+from utils.security import GuardRail
 from agents import generate_rca
 
 
@@ -9,13 +9,14 @@ def process(bug_id: str):
     context = get_context(bug_id)
 
     # 2. Check for prompt injection attacks
-    if detect_prompt_injection(context):
+    guard = GuardRail()
+    if guard.detect_prompt_injection(context):
         raise ValueError("Prompt injection detected in the context!")
     
     # 3. Sanitize secret information from the context
-    context = sanitize_secrets(context)
+    context = guard.sanitize_secrets(context)
 
-    # 4. Generate RCA using LLM
+    # 4. Generate RCA using LLM``
     rca = generate_rca(context)
 
     return rca
