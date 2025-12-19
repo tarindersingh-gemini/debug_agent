@@ -1,0 +1,1 @@
+A client verified the patch uploaded AjpPatch.patch works to fix the issue.
