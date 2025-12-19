@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug Agent - AI-Powered Root Cause Analysis</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in {
+            animation: fadeIn 0.6s ease-out forwards;
+        }
+        .section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        code {
+            background: #1e293b;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+        .code-block {
+            background: #1e293b;
+            border-radius: 8px;
+            padding: 1.5rem;
+            overflow-x: auto;
+        }
+        .arrow-down {
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+            40% { transform: translateY(-10px); }
+            60% { transform: translateY(-5px); }
+        }
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #cbd5e1;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .nav-dot.active {
+            background: #667eea;
+            transform: scale(1.3);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 font-sans">
+    
+    <!-- Navigation Dots -->
+    <div class="fixed right-8 top-1/2 transform -translate-y-1/2 z-50 flex flex-col gap-4">
+        <div class="nav-dot active" onclick="scrollToSection(0)" title="Home"></div>
+        <div class="nav-dot" onclick="scrollToSection(1)" title="Features"></div>
+        <div class="nav-dot" onclick="scrollToSection(2)" title="Architecture"></div>
+        <div class="nav-dot" onclick="scrollToSection(3)" title="Components"></div>
+        <div class="nav-dot" onclick="scrollToSection(4)" title="Workflow"></div>
+        <div class="nav-dot" onclick="scrollToSection(5)" title="Technology"></div>
+    </div>
+
+    <!-- Section 1: Hero -->
+    <section id="section-0" class="section gradient-bg">
+        <div class="container mx-auto px-6 text-center text-white fade-in">
+            <div class="inline-block px-4 py-2 bg-white/20 rounded-full backdrop-blur-sm mb-6">
+                <span class="text-sm font-semibold">🚀 AI-Powered Debugging</span>
+            </div>
+            <h1 class="text-6xl md:text-7xl font-bold mb-6">Debug Agent</h1>
+            <p class="text-2xl md:text-3xl mb-8 opacity-90">Intelligent Root Cause Analysis System</p>
+            <p class="text-xl mb-12 max-w-3xl mx-auto opacity-80">
+                Harness the power of AI to automatically analyze bugs, retrieve relevant code context, 
+                and generate comprehensive root cause analysis reports
+            </p>
+            <div class="flex gap-4 justify-center">
+                <button onclick="scrollToSection(1)" class="px-8 py-4 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105">
+                    Explore Features
+                </button>
+                <button onclick="scrollToSection(2)" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 transition-all">
+                    View Architecture
+                </button>
+            </div>
+            <div class="mt-16 arrow-down">
+                <svg class="w-8 h-8 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 2: Key Features -->
+    <section id="section-1" class="section bg-white py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl font-bold mb-4 gradient-text">Key Features</h2>
+                <p class="text-xl text-gray-600">Powerful capabilities for efficient bug resolution</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+                <div class="card-hover bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-2xl border border-blue-100">
+                    <div class="text-4xl mb-4">🔍</div>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-800">Semantic Code Search</h3>
+                    <p class="text-gray-600">Uses vector embeddings and FAISS to find relevant code sections with high precision</p>
+                </div>
+
+                <div class="card-hover bg-gradient-to-br from-green-50 to-emerald-50 p-8 rounded-2xl border border-green-100">
+                    <div class="text-4xl mb-4">🔒</div>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-800">Security-First Design</h3>
+                    <p class="text-gray-600">Automatically sanitizes secrets and detects prompt injection attempts</p>
+                </div>
+
+                <div class="card-hover bg-gradient-to-br from-purple-50 to-pink-50 p-8 rounded-2xl border border-purple-100">
+                    <div class="text-4xl mb-4">🎯</div>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-800">Contextual Analysis</h3>
+                    <p class="text-gray-600">Combines bug details, logs, and codebase information for comprehensive insights</p>
+                </div>
+
+                <div class="card-hover bg-gradient-to-br from-yellow-50 to-orange-50 p-8 rounded-2xl border border-yellow-100">
+                    <div class="text-4xl mb-4">🤖</div>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-800">LLM-Powered RCA</h3>
+                    <p class="text-gray-600">Generates detailed root cause analysis using advanced AI models</p>
+                </div>
+
+                <div class="card-hover bg-gradient-to-br from-red-50 to-pink-50 p-8 rounded-2xl border border-red-100">
+                    <div class="text-4xl mb-4">🧩</div>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-800">Modular Architecture</h3>
+                    <p class="text-gray-600">Clear separation of concerns across embedding, security, and workflow modules</p>
+                </div>
+
+                <div class="card-hover bg-gradient-to-br from-teal-50 to-cyan-50 p-8 rounded-2xl border border-teal-100">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="text-2xl font-bold mb-3 text-gray-800">High Performance</h3>
+                    <p class="text-gray-600">Optimized for speed with caching, batch processing, and async operations</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 3: Architecture -->
+    <section id="section-2" class="section bg-gray-50 py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl font-bold mb-4 gradient-text">System Architecture</h2>
+                <p class="text-xl text-gray-600">A robust, scalable design for intelligent bug analysis</p>
+            </div>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="bg-white rounded-2xl shadow-2xl p-8 md:p-12">
+                    <div class="space-y-6">
+                        <!-- Data Collection -->
+                        <div class="flex items-center gap-4 bg-blue-50 p-6 rounded-xl border-l-4 border-blue-500">
+                            <div class="text-3xl">📁</div>
+                            <div class="flex-1">
+                                <h4 class="text-xl font-bold text-gray-800 mb-1">Data Collection</h4>
+                                <p class="text-gray-600">Bug details, logs, and codebase files</p>
+                            </div>
+                            <div class="text-2xl text-gray-400">↓</div>
+                        </div>
+
+                        <!-- Embeddings -->
+                        <div class="flex items-center gap-4 bg-purple-50 p-6 rounded-xl border-l-4 border-purple-500">
+                            <div class="text-3xl">🧠</div>
+                            <div class="flex-1">
+                                <h4 class="text-xl font-bold text-gray-800 mb-1">Embeddings & Retrieval</h4>
+                                <p class="text-gray-600">FAISS vector database for semantic search</p>
+                            </div>
+                            <div class="text-2xl text-gray-400">↓</div>
+                        </div>
+
+                        <!-- Security -->
+                        <div class="flex items-center gap-4 bg-green-50 p-6 rounded-xl border-l-4 border-green-500">
+                            <div class="text-3xl">🛡️</div>
+                            <div class="flex-1">
+                                <h4 class="text-xl font-bold text-gray-800 mb-1">Security & Privacy</h4>
+                                <p class="text-gray-600">Secret sanitization and prompt injection detection</p>
+                            </div>
+                            <div class="text-2xl text-gray-400">↓</div>
+                        </div>
+
+                        <!-- Workflow -->
+                        <div class="flex items-center gap-4 bg-orange-50 p-6 rounded-xl border-l-4 border-orange-500">
+                            <div class="text-3xl">⚙️</div>
+                            <div class="flex-1">
+                                <h4 class="text-xl font-bold text-gray-800 mb-1">Workflow Orchestration</h4>
+                                <p class="text-gray-600">LLM interaction and RCA generation</p>
+                            </div>
+                            <div class="text-2xl text-gray-400">↓</div>
+                        </div>
+
+                        <!-- Output -->
+                        <div class="flex items-center gap-4 bg-indigo-50 p-6 rounded-xl border-l-4 border-indigo-500">
+                            <div class="text-3xl">📄</div>
+                            <div class="flex-1">
+                                <h4 class="text-xl font-bold text-gray-800 mb-1">RCA Output</h4>
+                                <p class="text-gray-600">Structured root cause analysis report</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 4: Components -->
+    <section id="section-3" class="section bg-white py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl font-bold mb-4 gradient-text">Core Components</h2>
+                <p class="text-xl text-gray-600">Detailed look at each module</p>
+            </div>
+            
+            <div class="max-w-6xl mx-auto space-y-8">
+                <!-- Embeddings Module -->
+                <div class="bg-gradient-to-r from-purple-100 to-indigo-100 rounded-2xl p-8 shadow-lg">
+                    <div class="flex items-start gap-6">
+                        <div class="text-5xl">🧠</div>
+                        <div class="flex-1">
+                            <h3 class="text-3xl font-bold mb-4 text-gray-800">Embeddings & Retrieval Module</h3>
+                            <p class="text-gray-700 mb-4 text-lg">Creates semantic embeddings and retrieves contextually relevant code using FAISS vector database.</p>
+                            <div class="code-block text-green-400 text-sm font-mono">
+<span class="text-gray-500"># Core function signature</span>
+<span class="text-blue-400">def</span> <span class="text-yellow-400">get_context</span>(<span class="text-orange-400">bug_id</span>: <span class="text-purple-400">str</span>) -> <span class="text-purple-400">str</span>:
+    <span class="text-gray-500">"""Retrieves comprehensive context for bug analysis"""</span>
+    <span class="text-gray-500"># Load bug data, generate embeddings, retrieve code</span>
+    <span class="text-blue-400">return</span> combined_context
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Module -->
+                <div class="bg-gradient-to-r from-green-100 to-emerald-100 rounded-2xl p-8 shadow-lg">
+                    <div class="flex items-start gap-6">
+                        <div class="text-5xl">🔒</div>
+                        <div class="flex-1">
+                            <h3 class="text-3xl font-bold mb-4 text-gray-800">Security & Privacy Module</h3>
+                            <p class="text-gray-700 mb-4 text-lg">Ensures safe data handling with secret sanitization and prompt injection detection.</p>
+                            <div class="grid md:grid-cols-2 gap-4">
+                                <div class="bg-white/50 rounded-lg p-4">
+                                    <h4 class="font-bold text-gray-800 mb-2">🕵️ Secret Sanitization</h4>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• API keys & tokens</li>
+                                        <li>• Passwords & credentials</li>
+                                        <li>• Database connections</li>
+                                        <li>• Email & IP addresses</li>
+                                    </ul>
+                                </div>
+                                <div class="bg-white/50 rounded-lg p-4">
+                                    <h4 class="font-bold text-gray-800 mb-2">🚨 Injection Detection</h4>
+                                    <ul class="text-sm text-gray-600 space-y-1">
+                                        <li>• Instruction override patterns</li>
+                                        <li>• Role manipulation attempts</li>
+                                        <li>• Jailbreak patterns</li>
+                                        <li>• Encoding tricks</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LLM Workflow Module -->
+                <div class="bg-gradient-to-r from-orange-100 to-red-100 rounded-2xl p-8 shadow-lg">
+                    <div class="flex items-start gap-6">
+                        <div class="text-5xl">🤖</div>
+                        <div class="flex-1">
+                            <h3 class="text-3xl font-bold mb-4 text-gray-800">LLM Workflow Module</h3>
+                            <p class="text-gray-700 mb-4 text-lg">Orchestrates LLM interaction for comprehensive RCA generation.</p>
+                            <div class="grid md:grid-cols-3 gap-4">
+                                <div class="bg-white/50 rounded-lg p-4 text-center">
+                                    <div class="text-3xl mb-2">📝</div>
+                                    <h4 class="font-bold text-gray-800">Prompt Construction</h4>
+                                </div>
+                                <div class="bg-white/50 rounded-lg p-4 text-center">
+                                    <div class="text-3xl mb-2">🔄</div>
+                                    <h4 class="font-bold text-gray-800">API Interaction</h4>
+                                </div>
+                                <div class="bg-white/50 rounded-lg p-4 text-center">
+                                    <div class="text-3xl mb-2">✅</div>
+                                    <h4 class="font-bold text-gray-800">Response Validation</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 5: Complete Workflow -->
+    <section id="section-4" class="section bg-gray-50 py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl font-bold mb-4 gradient-text">Complete Workflow</h2>
+                <p class="text-xl text-gray-600">End-to-end bug analysis process</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="relative">
+                    <!-- Vertical Line -->
+                    <div class="absolute left-8 top-0 bottom-0 w-1 bg-gradient-to-b from-purple-500 to-indigo-500"></div>
+                    
+                    <!-- Steps -->
+                    <div class="space-y-12 pl-20">
+                        <div class="relative">
+                            <div class="absolute -left-14 top-2 w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">1</div>
+                            <div class="bg-white p-6 rounded-xl shadow-lg">
+                                <h4 class="text-xl font-bold mb-2 text-gray-800">Bug Data Collection</h4>
+                                <p class="text-gray-600">Store bug details and logs in <code>/data/bugs/{bug_id}/</code></p>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-14 top-2 w-12 h-12 bg-purple-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">2</div>
+                            <div class="bg-white p-6 rounded-xl shadow-lg">
+                                <h4 class="text-xl font-bold mb-2 text-gray-800">Context Retrieval</h4>
+                                <p class="text-gray-600">Generate embeddings and retrieve relevant code via FAISS similarity search</p>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-14 top-2 w-12 h-12 bg-indigo-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">3</div>
+                            <div class="bg-white p-6 rounded-xl shadow-lg">
+                                <h4 class="text-xl font-bold mb-2 text-gray-800">Security Checks</h4>
+                                <p class="text-gray-600">Detect prompt injection attempts and sanitize secrets</p>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-14 top-2 w-12 h-12 bg-indigo-600 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">4</div>
+                            <div class="bg-white p-6 rounded-xl shadow-lg">
+                                <h4 class="text-xl font-bold mb-2 text-gray-800">LLM Processing</h4>
+                                <p class="text-gray-600">Construct prompt, call LLM API, parse and validate response</p>
+                            </div>
+                        </div>
+
+                        <div class="relative">
+                            <div class="absolute -left-14 top-2 w-12 h-12 bg-violet-500 rounded-full flex items-center justify-center text-white font-bold text-lg shadow-lg">5</div>
+                            <div class="bg-white p-6 rounded-xl shadow-lg">
+                                <h4 class="text-xl font-bold mb-2 text-gray-800">RCA Output</h4>
+                                <p class="text-gray-600">Save structured analysis to <code>/data/bugs/{bug_id}/rca.md</code></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Section 6: Technology Stack -->
+    <section id="section-5" class="section bg-white py-20">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 fade-in">
+                <h2 class="text-5xl font-bold mb-4 gradient-text">Technology Stack</h2>
+                <p class="text-xl text-gray-600">Built with cutting-edge technologies</p>
+            </div>
+            
+            <div class="max-w-5xl mx-auto">
+                <div class="grid md:grid-cols-2 gap-8 mb-12">
+                    <!-- Core Technologies -->
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 shadow-lg">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">Core Technologies</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 bg-white rounded-lg p-4">
+                                <div class="text-3xl">🐍</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Python 3.9+</h4>
+                                    <p class="text-sm text-gray-600">Core programming language</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 bg-white rounded-lg p-4">
+                                <div class="text-3xl">🔗</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">LangChain</h4>
+                                    <p class="text-sm text-gray-600">LLM orchestration framework</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 bg-white rounded-lg p-4">
+                                <div class="text-3xl">🤖</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">OpenAI API</h4>
+                                    <p class="text-sm text-gray-600">GPT-4 for RCA generation</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- AI & Vector Database -->
+                    <div class="bg-gradient-to-br from-purple-50 to-pink-50 rounded-2xl p-8 shadow-lg">
+                        <h3 class="text-2xl font-bold mb-6 text-gray-800">AI & Data</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center gap-4 bg-white rounded-lg p-4">
+                                <div class="text-3xl">🎯</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">FAISS</h4>
+                                    <p class="text-sm text-gray-600">Vector similarity search</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 bg-white rounded-lg p-4">
+                                <div class="text-3xl">📊</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">NumPy</h4>
+                                    <p class="text-sm text-gray-600">Numerical computations</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-4 bg-white rounded-lg p-4">
+                                <div class="text-3xl">🔄</div>
+                                <div>
+                                    <h4 class="font-bold text-gray-800">Autogen</h4>
+                                    <p class="text-sm text-gray-600">Agent workflows</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Requirements -->
+                <div class="bg-gray-800 text-white rounded-2xl p-8 shadow-2xl">
+                    <h3 class="text-2xl font-bold mb-6">System Requirements</h3>
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div>
+                            <div class="text-3xl mb-2">💻</div>
+                            <h4 class="font-bold mb-2">Python 3.9+</h4>
+                            <p class="text-sm text-gray-400">Required version</p>
+                        </div>
+                        <div>
+                            <div class="text-3xl mb-2">🧮</div>
+                            <h4 class="font-bold mb-2">8GB RAM</h4>
+                            <p class="text-sm text-gray-400">Recommended minimum</p>
+                        </div>
+                        <div>
+                            <div class="text-3xl mb-2">💾</div>
+                            <h4 class="font-bold mb-2">Variable Storage</h4>
+                            <p class="text-sm text-gray-400">Based on codebase size</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA -->
+                <div class="mt-12 text-center">
+                    <div class="inline-block bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-2xl p-8 shadow-2xl">
+                        <h3 class="text-3xl font-bold mb-4">Ready to Get Started?</h3>
+                        <p class="text-lg mb-6 opacity-90">Deploy Debug Agent and revolutionize your bug analysis workflow</p>
+                        <div class="flex gap-4 justify-center flex-wrap">
+                            <a href="https://github.com/apache/httpd" target="_blank" class="px-6 py-3 bg-white text-purple-600 rounded-lg font-semibold hover:bg-gray-100 transition-all transform hover:scale-105">
+                                View Sample: Apache HTTPD
+                            </a>
+                            <button onclick="scrollToSection(0)" class="px-6 py-3 bg-transparent border-2 border-white text-white rounded-lg font-semibold hover:bg-white/10 transition-all">
+                                Back to Top
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-8">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400">Debug Agent © 2025 | AI-Powered Root Cause Analysis</p>
+            <p class="text-sm text-gray-500 mt-2">Built with ❤️ using Tailwind CSS</p>
+        </div>
+    </footer>
+
+    <script>
+        let currentSection = 0;
+        const sections = document.querySelectorAll('.section');
+        const navDots = document.querySelectorAll('.nav-dot');
+        
+        function scrollToSection(index) {
+            currentSection = index;
+            sections[index].scrollIntoView({ behavior: 'smooth' });
+            updateNavDots();
+        }
+        
+        function updateNavDots() {
+            navDots.forEach((dot, index) => {
+                if (index === currentSection) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+        }
+        
+        // Update active dot on scroll
+        let isScrolling = false;
+        window.addEventListener('scroll', () => {
+            if (isScrolling) return;
+            
+            isScrolling = true;
+            setTimeout(() => {
+                const scrollPosition = window.scrollY + window.innerHeight / 2;
+                
+                sections.forEach((section, index) => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        currentSection = index;
+                        updateNavDots();
+                    }
+                });
+                
+                isScrolling = false;
+            }, 100);
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowDown' && currentSection < sections.length - 1) {
+                scrollToSection(currentSection + 1);
+            } else if (e.key === 'ArrowUp' && currentSection > 0) {
+                scrollToSection(currentSection - 1);
+            }
+        });
+        
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in');
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.card-hover, .code-block').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
